@@ -5,6 +5,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
 import { useRouter } from "next/router";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -13,6 +19,15 @@ function LoginForm() {
   const [popoverOpen, setPopoverOpen] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleClickOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const handlePopoverOpen = (event) => {
     setPopoverOpen(event.currentTarget);
@@ -33,7 +48,11 @@ function LoginForm() {
         return auth.signIn({ email: username, password: password }).then(() => {
           router.push("/dashboard");
         });
+      } else {
+        handleClickOpenModal();
       }
+    } else {
+      handleClickOpenModal();
     }
   };
 
@@ -110,6 +129,28 @@ function LoginForm() {
         </Typography>
         <Typography sx={{ p: 1 }}>Password: connecta</Typography>
       </Popover>
+
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Usuário ou senha incorretos."}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Tente o botão de "Esqueceu a senha?"
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal}>Cancelar</Button>
+          <Button onClick={handleCloseModal} autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
