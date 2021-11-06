@@ -10,6 +10,9 @@ export const useRequireAuth = () => {
     if (auth.user === false) {
       router.push("/");
     }
+    if (auth.user) {
+      router.push("/dashboard");
+    }
   }, [auth, router]);
 
   return auth;
