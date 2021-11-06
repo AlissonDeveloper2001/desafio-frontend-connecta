@@ -5,6 +5,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
+import { useRouter } from "next/router";
+import { useAuth } from "../../hooks/useAuth";
 
 import styles from "../../styles/LoginForm.module.css";
 function LoginForm() {
@@ -21,14 +23,16 @@ function LoginForm() {
   };
 
   const open = Boolean(popoverOpen);
+  const router = useRouter();
+  const auth = useAuth();
 
   const onSubmit = () => {
-    console.log(username);
-
-    if (username == "admin") {
+    console.log(auth.user);
+    if (username == "desafioconnecta@connecta.com") {
       if (password == "connecta") {
-        //logado
-        localStorage.setItem("authenticate", true);
+        return auth.signIn({ email: username, password: password }).then(() => {
+          router.push("/dashboard");
+        });
       }
     }
   };
@@ -60,8 +64,8 @@ function LoginForm() {
       <Button
         variant="contained"
         className={styles.submitButton}
-        type="submit"
-        onSubmit={onSubmit}
+        // type="submit"
+        onClick={onSubmit}
       >
         Entrar
       </Button>
@@ -93,7 +97,9 @@ function LoginForm() {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography sx={{ p: 1 }}>User: admin</Typography>
+        <Typography sx={{ p: 1 }}>
+          User: desafioconnecta@connecta.com
+        </Typography>
         <Typography sx={{ p: 1 }}>Password: connecta</Typography>
       </Popover>
     </Box>
