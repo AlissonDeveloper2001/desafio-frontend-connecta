@@ -36,6 +36,12 @@ function LoginForm() {
       }
     }
   };
+
+  const onPressEnter = (e) => {
+    if (e.charCode === 13) {
+      onSubmit();
+    }
+  };
   return (
     <Box
       component="form"
@@ -51,6 +57,7 @@ function LoginForm() {
         variant="outlined"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        onKeyPress={(e) => onPressEnter(e)}
       />
       <TextField
         id="outlined-basic"
@@ -59,6 +66,7 @@ function LoginForm() {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        onKeyPress={(e) => onPressEnter(e)}
         required
       />
       <Button

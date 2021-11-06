@@ -6,12 +6,8 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import LoginForm from "../components/LoginForm";
-import { useRequireAuth } from "../hooks/useRequireAuth";
 
 export default function login() {
-  const auth = useRequireAuth();
-  if (!auth.user) return null;
-
   return (
     <div className={styles.body}>
       <Head>
